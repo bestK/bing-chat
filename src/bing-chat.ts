@@ -80,13 +80,17 @@ export class BingChat {
 
     const responseP = new Promise<types.ChatMessage>(
       async (resolve, reject) => {
-        const chatWebsocketUrl = 'wss://sydney.bing.com/sydney/ChatHub'
+
+        const host = process.env.BING_HOST ?? 'sydney.bing.com'
+        const chatWebsocketUrl = `wss://${host}/sydney/ChatHub`
+    
         const ws = new WebSocket(chatWebsocketUrl, {
           perMessageDeflate: false,
           headers: {
             'accept-language': 'en-US,en;q=0.9',
             'cache-control': 'no-cache',
-            pragma: 'no-cache'
+            'pragma': 'no-cache',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
           }
         })
 
@@ -138,9 +142,8 @@ export class BingChat {
 
             // example location: 'lat:47.639557;long:-122.128159;re=1000m;'
             const locationStr = location
-              ? `lat:${location.lat};long:${location.lng};re=${
-                  location.re || '1000m'
-                };`
+              ? `lat:${location.lat};long:${location.lng};re=${location.re || '1000m'
+              };`
               : undefined
 
             // Sets the correct options for the variant of the model
@@ -278,8 +281,8 @@ export class BingChat {
     const cookie = this._cookie.includes(';')
       ? this._cookie
       : `_U=${this._cookie}`
-
-    return fetch('https://www.bing.com/turing/conversation/create', {
+    const host = process.env.BING_HOST ?? 'www.bing.com'
+    return fetch(`https://${host}/turing/conversation/create`, {
       headers: {
         accept: 'application/json',
         'accept-language': 'en-US,en;q=0.9',

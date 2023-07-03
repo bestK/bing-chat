@@ -38,6 +38,36 @@ Make sure you're using `node >= 18` so `fetch` is available.
 
 ## Usage
 
+
+``` shell
+npm install bing-chat-patch
+
+#Create your bing proxy, see https://github.com/adams549659584/go-proxy-bingai
+
+export BING_HOST=<your_bing_host> #Please do not include https/http.
+```
+ 
+``` ts
+import { BingChat } from 'bing-chat-patch';
+import dotenv from 'dotenv';
+dotenv.config();
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 **You need access to Bing Chat OR a valid cookie from someone who has access**.
 
 The cookie you need from Bing is the `_U` cookie (or just all of the cookies concatenated together; both will work).
